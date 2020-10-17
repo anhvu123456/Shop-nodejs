@@ -13,11 +13,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const authRouter = require('./routes/auth');
+mongoose.set('useCreateIndex', true);
 
 app.use(compression());
 
 //connect database
-mongoose.connect('mongodb://localhost/WebBanHang', { useNewUrlParser: true, useUnifiedTopology: true}, err => {
+mongoose.connect('mongodb://localhost/WebSale', { useNewUrlParser: true, useUnifiedTopology: true}, err => {
   if (err) throw err;
   console.log('Connect succesfully');
 });
@@ -33,12 +34,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(flash());
 
+app.use(
+  session({
+    secret: 'notsecret',
+    saveUninitialized: true,
+    resave: false,
+    store: new MongoDBStore({uri: 'mongodb://localhost/WebSale', collection: 'session' }),
+    cookie: {maxAge: 180 * 60 * 1000}
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+//pass passport for config
+require('./config/passport')(passport)
+
 app.use(authRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next){
-  next(CreateError(404));
-})
+// app.use(function(req, res, next){
+//   next(CreateError(404));
+// })
 
 app.listen(8080, function() {
     console.log('Server listening on port ' + 8080);

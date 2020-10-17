@@ -93,7 +93,11 @@ module.exports = function(passport){
                      email: req.body.email
                  });
                  newUser.save(function(err){
-                     if(err) return done(err)
+                     if(err){ 
+                         console.log(err);
+                         return done(err)
+                     }
+
                      return done(null, newUser);
                  })
              });
