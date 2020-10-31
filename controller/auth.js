@@ -4,6 +4,8 @@ const nodemailer = require('nodemailer');
 const User = require('../models/user');
 const randomstring = require('randomstring');
 const { use } = require('passport');
+const bcrypt = require('bcryptjs');
+const { getMaxListeners } = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
         // var cartProduct;
@@ -25,6 +27,14 @@ exports.getLogin = (req, res, next) => {
                 res.redirect('/');
          }
  };
+
+ exports.postLogin = (req, res, next) => {
+     passport.authenticate('local-signin', {
+         successReturnToOrRedirect: '/',
+         failureRedirect: '/login',
+         failureFlash: true
+     })(req, res, next)
+ }
 
   
 exports.getSignUp = (req, res, next) => {
@@ -48,6 +58,11 @@ exports.getSignUp = (req, res, next) => {
     }
 
 }
+
+exports.getLogout = (req, res, next) => {
+    req.logout();
+    res.redirect('/login');
+}
 exports.postSignup = (req, res, next) => {
     passport.authenticate('local-signup', {
         successReturnToOrRedirect: "/verify-email",
@@ -61,7 +76,7 @@ exports.getVerifyEmail = (req, res, next) => {
         service: 'Gmail',
         auth: {
             user: 'dangvuanhdev.98@gmail.com',
-            pass: 'tuyetvoicongavoi'
+            pass: ''
         }
     });
     User.findOne({username: req.user.username}).then(user => {
@@ -112,9 +127,83 @@ exports.postVerifyEmail = (req, res, next) => {
 }
 
 exports.getForgotPass = (req, res, next) => {
-    res.render('forgot-password');
+    const message = req.flash('error')[0];
+    res.render('forgot-password', {
+        title: 'forgot password',
+        message: `${message}`,
+        user: req.user
+    });
 }
 
+exports.postForgotPass = (req, res, next) => {
+    const email = req.body.email;
+    User.findOne({email: email}, (err, user) => {
+        if(!user){
+            req.flash("error", 'email invaild');
+            return res.redirect("forgot-password");
+        }else{
+            var transporter = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: "dangvuanhdev.98@gmail.com",
+                    pass: ''
+                }
+            });
+            var tpass = randomstring.generate({
+                length: 6
+            });
+            var mainOption = {
+                from: 'Adim',
+                to: email,
+                subject: " Forgot password",
+                text: "pass",
+                html: "<p>Mật khẩu mới của bạn là:</p>" + tpass
+            };
+            transporter.sendMail(mainOption, (err, info) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(" Sent: "+info.response)
+                }
+            });
+            bcrypt.hash(tpass, 12).then( hashPassword => {
+                user.password = hashPassword;
+                user.save();
+            });
+            res.redirect('/login');
+        }
+    })
+}
+
+
+
 exports.getChangePassword = (req, res, next) => {
-    res.render('change-password');
+    const message = req.flash("error")[0];
+    res.render("change-password", {
+        title: 'Đổi mật khẩu',
+        message: `${message}`,
+        user: req.user,
+    });
+}
+
+exports.postChangePassword = (req, res, next) => {
+    bcrypt.compare(req.body.oldpass, req.user.password, function(err, result){
+        console.log('change password');
+        if(!result){
+            req.flash('error', "Mật khẩu cũ không đúng");
+            return res.redirect("back");
+        }else if(req.body.newpass != req.body.newpass2){
+            console.log(req.body.newpass);
+            console.logog(req.body.newpass2);
+            req.flash("error", "Nhập lại mật khẩu không khớp");
+            return res.render("back");
+        }else{
+            bcrypt.hash(req.body.newpass, 12).then(hashPassword => {
+                req.user.password = hashPassword;
+                req.user.save();
+            })
+            req.flash("success", "Đổi mật khẩu thành công");
+            req.redirect("/account");
+        }
+    })
 }

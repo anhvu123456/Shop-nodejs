@@ -193,7 +193,7 @@
 				<div class="tt-description">CÁC SẢN PHẨM ĐƯỢC XEM NHIỀU NHẤT TUẦN</div>
 			</div>
 			<div class="row tt-layout-product-item">
-				<% trendings.forEach(function(prod) { %>
+				
 
 					
 
@@ -201,15 +201,15 @@
 						<div class="tt-product thumbprod-center">
 							<div class="tt-image-box">
 								
-								<a href="/product/<%= prod._id %>">
-									<span class="tt-img"><img src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[0] %>" data-src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[0] %>" alt="" class="loaded" data-was-processed="true"></span>
-									<span class="tt-img-roll-over"><img src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[1] %>" data-src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[1] %>" alt="" class="loaded" data-was-processed="true"></span>
+								<a href="">
+									<span class="tt-img"><img src="" data-src="" alt="" class="loaded" data-was-processed="true"></span>
+									<span class="tt-img-roll-over"><img src="" data-src="" alt="" class="loaded" data-was-processed="true"></span>
 								</a>
 							</div>
 							<div class="tt-description">
 								<div class="tt-row">
 									<ul class="tt-add-info">
-										<li><a href="#"><%= prod.productType.sub %></a></li>
+										<li><a href="#"></a></li>
 									</ul>
 									<div class="tt-rating">
 										<i class="icon-star"></i>
@@ -219,13 +219,13 @@
 										<i class="icon-star"></i>
 									</div>
 								</div>
-								<h2 class="tt-title"><a href="product/<%= prod._id %>"><%= prod.name %></a></h2>
+								<h2 class="tt-title"><a href=""></a></h2>
 								<div class="tt-price">
-									$<%= prod.price %>
+									
 								</div>
 								<div class="tt-product-inside-hover" >
 									<div class="tt-row-btn">
-										<button class="tt-btn-addtocart thumbprod-button-bg add-cart" data-id="<%= prod._id %>" data-toggle="modal" data-target="#modalAddToCartProduct<%= prod._id %>">THÊM VÀO GIỎ HÀNG</button>
+										<button class="tt-btn-addtocart thumbprod-button-bg add-cart" data-id="" data-toggle="modal" data-target="">THÊM VÀO GIỎ HÀNG</button>
 									</div>
 			
 								</div>
@@ -236,7 +236,7 @@
 					
 					<div
   						class="modal fade"
-  						id="modalAddToCartProduct<%= prod._id %>"
+  						id=""
   						tabindex="-1"
   						role="dialog"
   						aria-label="myModalLabel"
@@ -281,12 +281,12 @@
                 <div class="tt-img">
                   <img
                     src="/images/loader.svg"
-                    data-src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[0] %>"
+                    data-src=""
                     alt=""
                   />
                 </div>
                 <h2 class="tt-title">
-                  <a href="/product/<%= prod.name %>"><%= prod.name %></a>
+                  <a href=""></a>
                 </h2>
 
                 <div class="tt-qty">QTY: <span>1</span></div>
@@ -294,7 +294,7 @@
               <div class="tt-product-total">
                 <div class="tt-total">
                   TOTAL:
-                  <span class="tt-price">$<%= prod.price %></span>
+                  <span class="tt-price"></span>
                 </div>
               </div>
             </div>
@@ -305,14 +305,14 @@
                 >Tiếp tục mua sắm</a
               >
               <a href="/shopping_cart" class="btn btn-border">Xem giỏ hàng</a>
-              <%if (typeof(user) !== 'undefined' && user.isAuthenticated) { %>
+              
 				<a href="/add-order" class="btn">Chuyển đến thanh toán</a>
-				<% }else if(typeof(user) == 'undefined'){ %>
+				
 					<a href="/login" class="btn">Đăng nhập để thanh toán</a>
 					
-					<% }else if(typeof(user) !== 'undefined' && !user.isAuthenticated){ %>
+				
 						<a href="/verify-email" class="btn">Kích hoạt email để thanh toán</a>
-						<% } %>
+						
             </div>
           </div>
         </div>
@@ -320,7 +320,7 @@
     </div>
   </div>
 </div>
-					<% }); %>
+					
 			</div>
 		</div>
 	</div>
@@ -374,7 +374,7 @@
 				<div class="tt-description">TOP NHỮNG SẢN PHẨM BÁN CHẠY NHẤT TUẦN QUA</div>
 			</div>
 			<div class="row tt-layout-product-item">
-				<% hots.forEach(function(prod) { %>
+				
 
 					
 
@@ -382,15 +382,15 @@
 						<div class="tt-product thumbprod-center">
 							<div class="tt-image-box">
 								
-								<a href="/product/<%= prod._id %>">
-									<span class="tt-img"><img src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[0] %>" data-src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[0] %>" alt="" class="loaded" data-was-processed="true"></span>
-									<span class="tt-img-roll-over"><img src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[1] %>" data-src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[1] %>" alt="" class="loaded" data-was-processed="true"></span>
+								<a href="">
+									<span class="tt-img"><img src="" data-src="" alt="" class="loaded" data-was-processed="true"></span>
+									<span class="tt-img-roll-over"><img src="" data-src="" alt="" class="loaded" data-was-processed="true"></span>
 								</a>
 							</div>
 							<div class="tt-description">
 								<div class="tt-row">
 									<ul class="tt-add-info">
-										<li><a href="#"><%= prod.productType.sub %></a></li>
+										<li><a href="#"></a></li>
 									</ul>
 									<div class="tt-rating">
 										<i class="icon-star"></i>
@@ -400,13 +400,13 @@
 										<i class="icon-star"></i>
 									</div>
 								</div>
-								<h2 class="tt-title"><a href="product/<%= prod._id %>"><%= prod.name %></a></h2>
+								<h2 class="tt-title"><a href=""></a></h2>
 								<div class="tt-price">
-									$<%= prod.price %>
+									
 								</div>
 								<div class="tt-product-inside-hover" >
 									<div class="tt-row-btn">
-										<button class="tt-btn-addtocart thumbprod-button-bg add-cart" data-id="<%= prod._id %>" data-toggle="modal" data-target="#modalAddToCartProduct<%= prod._id %>">THÊM VÀO GIỎ HÀNG</button>
+										<button class="tt-btn-addtocart thumbprod-button-bg add-cart" data-id="" data-toggle="modal" data-target="">THÊM VÀO GIỎ HÀNG</button>
 									</div>
 			
 								</div>
@@ -417,7 +417,7 @@
 					
 					<div
   						class="modal fade"
-  						id="modalAddToCartProduct<%= prod._id %>"
+  						id=""
   						tabindex="-1"
   						role="dialog"
   						aria-label="myModalLabel"
@@ -443,14 +443,14 @@
           </div>
           <button class="btn-link btn-close-popup" data-dismiss="modal">Tiếp tục mua sắm</button>
           <a href="/shopping_cart" class="btn-link">XEM GIỎ HÀNG</a>
-          <%if (typeof(user) !== 'undefined' && user.isAuthenticated) { %>
+          
 			<a href="/add-order" class="btn">Chuyển đến thanh toán</a>
-			<% }else if(typeof(user) == 'undefined'){ %>
+			
 				<a href="/login" class="btn">Đăng nhập để thanh toán</a>
 				
-				<% }else if(typeof(user) !== 'undefined' && !user.isAuthenticated){ %>
+				
 					<a href="/verify-email" class="btn">Kích hoạt email để thanh toán</a>
-					<% } %>
+					
         </div>
         <div class="tt-modal-addtocart desctope">
           <div class="row">
@@ -462,12 +462,12 @@
                 <div class="tt-img">
                   <img
                     src="/images/loader.svg"
-                    data-src="http://bros-admin.herokuapp.com/assets/images/<%= prod.images[0] %>"
+                    data-src=""
                     alt=""
                   />
                 </div>
                 <h2 class="tt-title">
-                  <a href="/product/<%= prod.name %>"><%= prod.name %></a>
+                  <a href=""></a>
                 </h2>
 
                 <div class="tt-qty">QTY: <span>1</span></div>
@@ -475,7 +475,7 @@
               <div class="tt-product-total">
                 <div class="tt-total">
                   TOTAL:
-                  <span class="tt-price">$<%= prod.price %></span>
+                  <span class="tt-price"></span>
                 </div>
               </div>
             </div>
@@ -486,14 +486,14 @@
                 >Tiếp tục mua sắm</a
               >
               <a href="/shopping_cart" class="btn btn-border">Xem giỏ hàng</a>
-              <%if (typeof(user) !== 'undefined' && user.isAuthenticated) { %>
+             
 				<a href="/add-order" class="btn">Chuyển đến thanh toán</a>
-				<% }else if(typeof(user) == 'undefined'){ %>
+				
 					<a href="/login" class="btn">Đăng nhập để thanh toán</a>
 					
-					<% }else if(typeof(user) !== 'undefined' && !user.isAuthenticated){ %>
+					
 						<a href="/verify-email" class="btn">Kích hoạt email để thanh toán</a>
-						<% } %>
+					
             </div>
           </div>
         </div>
@@ -501,7 +501,7 @@
     </div>
   </div>
 </div>
-					<% }); %>
+				
 			</div>
 		</div>
 	</div>

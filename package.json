@@ -29,6 +29,7 @@
     "nodemailer": "^6.4.13",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "randomstring": "^1.1.5",
     "request": "^2.88.2",
     "validator": "^13.1.17"

@@ -23,7 +23,9 @@ module.exports = function(passport){
     passport.use('local-signin', new LocalStrategy(function(username, password, done){
         User.findOne({ username: username}, function(err, user) {
             if(err) {
-                return done(err);
+                return done(null, false, {
+                    message: "Xin mời bạn nhập lại"
+                });
             }
             if(!user){
                 return done(null, false, {
@@ -53,7 +55,9 @@ module.exports = function(passport){
     passport.use('local-signup', new LocalStrategy({ passReqToCallback: true}, function(req, username, password, done) {
         User.findOne({ username: username}, function(err, user) {
             if(err) {
-                return done(err);
+                return done(null, false, {
+                    message: "Xin mời bạn nhập lại"
+                });
             }
             if(user) {
                 return done(null, false, {

@@ -13,6 +13,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const authRouter = require('./routes/auth');
+const shopRouter = require('./routes/shop');
 mongoose.set('useCreateIndex', true);
 
 app.use(compression());
@@ -50,6 +51,7 @@ app.use(passport.session());
 require('./config/passport')(passport)
 
 app.use(authRouter);
+app.use(shopRouter);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next){
