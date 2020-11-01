@@ -201,56 +201,32 @@
 								</div>
 								<div class="tt-dropdown-inner">
 									<ul>
-											
-												<li>Xin chào,</a></li>
-												<li><a href="/account"><i class="icon-f-94"></i>Tài khoản</a></li>
-												
-												<li><a href="/shopping_cart"><i class="icon-f-68"></i>Thanh toán</a></li>
-												
-											
-													<li><a href="/verify-email"><i class="icon-f-68"></i>Xác thực email</a></li>
-												
-									    
-										
-										
-										
-											<li><a href="/logout"><i class="icon-f-77"></i>Đăng xuất</a></li>
-											
+										<%if (typeof(user) !== 'undefined') { %>
+											<li>Xin chào, <%= user.username %></a></li>
+											<li><a href="/account"><i class="icon-f-94"></i>Tài khoản</a></li>
+											<% if(user.isAuthenticated) {%>
+											<li><a href="/shopping_cart"><i class="icon-f-68"></i>Thanh toán</a></li>
+											<% } %>
+											<% if(!user.isAuthenticated) {%>
+												<li><a href="/verify-email"><i class="icon-f-68"></i>Xác thực email</a></li>
+										<% }} %>
+									
+									
+									
+									<%if (typeof(user) !== 'undefined') { %>
+										<li><a href="/logout"><i class="icon-f-77"></i>Đăng xuất</a></li>
+									<% } %>
 
-											
-												<li><a href="/login"><i class="icon-f-76"></i>Đăng nhập</a></li>
-									    
-									    <li><a href="/create-account"><i class="icon-f-94"></i>Đăng ký</a></li>
+									<%if (typeof(user) === 'undefined') { %>
+										<li><a href="/login"><i class="icon-f-76"></i>Đăng nhập</a></li>									
+										<li><a href="/create-account"><i class="icon-f-94"></i>Đăng ký</a></li>
+									<% } %>
 												
-									    
 									</ul>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- /tt-account -->
-					<!-- tt-langue and tt-currency -->
-					<div class="tt-desctop-parent-multi tt-parent-box">
-						<div class="tt-multi-obj tt-dropdown-obj">
-							<button class="tt-dropdown-toggle" data-tooltip="Cài đặt" data-tposition="bottom"><i class="icon-f-79"></i></button>
-							<div class="tt-dropdown-menu">
-								<div class="tt-mobile-add">
-									<button class="tt-close">Đóng</button>
-								</div>
-								<div class="tt-dropdown-inner">
-									<ul>
-										<li class="active"><a href="/#">Tiếng Việt</a></li>
-										
-									</ul>
-									<ul>
-										<li class="active"><a href="/#"><i class="icon-h-59"></i>VND - Việt Nam Đồng</a></li>
-										<li><a href="/#"><i class="icon-h-60"></i>USD - Dollar</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /tt-langue and tt-currency -->
+					</div>					
 				</div>
 			</div>
 		</div>
