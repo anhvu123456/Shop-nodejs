@@ -6,21 +6,23 @@ const randomstring = require('randomstring');
 const { use } = require('passport');
 const bcrypt = require('bcryptjs');
 const { getMaxListeners } = require('../models/user');
+const Cart = require('../models/cart');
 
 exports.getLogin = (req, res, next) => {
-        // var cartProduct;
-        // if(!req.session.cart){
-        //     cartProduct = null;
-        // }else{
-        //     var cart = new Cart(req.session.cart);
-        //     cartProduct = cart.generateArray();
-        // }
+         var cartProduct;
+         if(!req.session.cart){
+             cartProduct = null;
+        }else{
+            var cart = new Cart(req.session.cart);
+            cartProduct = cart.generateArray();
+         }
         const message = req.flash("error")[0];
         if(!req.isAuthenticated()){
             res.render('login',{
             title: 'Login',
             message: `${message}`,
-            user: req.user
+            user: req.user,
+            cartProduct: cartProduct
             });
             }
         else{
@@ -39,19 +41,20 @@ exports.getLogin = (req, res, next) => {
   
 exports.getSignUp = (req, res, next) => {
     const message = req.flash("error")[0];
-    // var cartProduct;
-    // if(!req.session.cart){
-    //     cartProduct = null;
-    // }else{
-    //     var cart = new Cart(req.session.cart);
-    //     cartProduct = cart.generateArray();
-    // }
+     var cartProduct;
+     if(!req.session.cart){
+         cartProduct = null;
+     }else{
+         var cart = new Cart(req.session.cart);
+        cartProduct = cart.generateArray();
+     }
 
     if(!req.isAuthenticated()){
         res.render('create-account', {
             title: 'Sinup',
             message: `${message}`,
-            user: req.user         
+            user: req.user , 
+            cartProduct: cartProduct    
         })
     }else{
         res.redirect('/');
@@ -60,6 +63,9 @@ exports.getSignUp = (req, res, next) => {
 }
 
 exports.getLogout = (req, res, next) => {
+    if(req.session.cart){
+        req.session.cart = null;
+    }
     req.logout();
     res.redirect('/login');
 }
@@ -128,10 +134,18 @@ exports.postVerifyEmail = (req, res, next) => {
 
 exports.getForgotPass = (req, res, next) => {
     const message = req.flash('error')[0];
+    var cartProduct;
+    if(!req.session.cart){
+        cartProduct = null;
+    }else{
+        var cart = new Cart(req.session.cart);
+        cartProduct = cart.generateArray();
+    }
     res.render('forgot-password', {
         title: 'forgot password',
         message: `${message}`,
-        user: req.user
+        user: req.user,
+        cartProduct: cartProduct
     });
 }
 
@@ -179,10 +193,18 @@ exports.postForgotPass = (req, res, next) => {
 
 exports.getChangePassword = (req, res, next) => {
     const message = req.flash("error")[0];
+    var cartProduct;
+    if(!req.session.cart){
+        cartProduct = null;
+    }else{
+        var cart = new Cart(req.session.cart);
+        cartProduct = cart.generateArray();
+    }
     res.render("change-password", {
         title: 'Đổi mật khẩu',
         message: `${message}`,
         user: req.user,
+        cartProduct: cartProduct
     });
 }
 

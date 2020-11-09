@@ -1,29 +1,31 @@
-require('dotenv').config;
+require('dotenv').config();
 
-const CreateError = require('http-errors');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
-const flash = require('connect-flash');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const compression = require('compression');
-const express = require('express');
-const path = require('path');
-const app = express();
-const authRouter = require('./routes/auth');
 const shopRouter = require('./routes/shop');
+const authRouter = require('./routes/auth');
+const flash = require('connect-flash');
+const app = express();
+const MongoDBStore = require('connect-mongodb-session')(session);
+const Cart = require('./models/cart');
+const Product = require('./models/product');
+const compression = require('compression');
+app.use(compression());
 mongoose.set('useCreateIndex', true);
 
-app.use(compression());
+const urlConnect = process.env.DB;
 
-//connect database
-mongoose.connect('mongodb://localhost/WebSale', { useNewUrlParser: true, useUnifiedTopology: true}, err => {
+// Connect to database
+mongoose.connect('mongodb://localhost/WebSale', { useNewUrlParser: true, useUnifiedTopology: true }, err => {
   if (err) throw err;
-  console.log('Connect succesfully');
+  console.log('Connect successfullyy!!');
 });
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,32 +36,55 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(flash());
-
 app.use(
   session({
     secret: 'notsecret',
     saveUninitialized: true,
     resave: false,
-    store: new MongoDBStore({uri: 'mongodb://localhost/WebSale', collection: 'session' }),
-    cookie: {maxAge: 180 * 60 * 1000}
+    store: new MongoDBStore({ uri: process.env.DB, collection: 'sessions' }),
+    cookie: { maxAge: 180 * 60 * 1000 }
   })
 );
 
+app.use((req, res, next) => {
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  req.session.cart = cart;
+  res.locals.session = req.session;
+  next();
+});
 app.use(passport.initialize());
 app.use(passport.session());
-//pass passport for config
-require('./config/passport')(passport)
 
-app.use(authRouter);
 app.use(shopRouter);
+app.use(authRouter);
+
+// pass passport for configuration
+require('./config/passport')(passport);
 
 // catch 404 and forward to error handler
-// app.use(function(req, res, next){
-//   next(CreateError(404));
-// })
-
-app.listen(8080, function() {
-    console.log('Server listening on port ' + 8080);
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
+// error handler
+app.use(function(err, req, res, next) {
+  var cartProduct;
+  if (!req.session.cart) {
+    cartProduct = null;
+  } else {
+    var cart = new Cart(req.session.cart);
+    cartProduct = cart.generateArray();
+  }
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error', { cartProduct: cartProduct });
+});
+
+app.listen(8080, function() {
+  console.log('Server listening on port ');
+});
 module.exports = app;

@@ -124,7 +124,7 @@
 						<div class="tt-cart tt-dropdown-obj box-cart" data-tooltip="Cart" data-tposition="bottom" >
 							<button class="tt-dropdown-toggle">
 								<i class="icon-f-39"></i>
-								<span class="tt-badge-cart" ></span>
+								<span class="tt-badge-cart" ><%= session.cart.numItems%></span>
 							</button>
 							<div class="tt-dropdown-menu">
 								<div class="tt-mobile-add">
@@ -141,43 +141,56 @@
 										<div class="tt-cart-content" >
 											
 											<div class="tt-cart-list">
-												
+												<% if(session.cart.numItems == 0){ %>
+													<div class="tt-item">Không có sản phẩm trong giỏ</div>
+													<% } %>
+												<% if(cartProduct != null){
+													var i = 0;
+													cartProduct.forEach(function(item){
+													if(i == 3){
+														return;
+													}
+													%>
 												<div class="tt-item">
 													
 													
-													<a href="">
+													<a href="/product/<%= item.item._id %>">
 														<div class="tt-item-img">
-															<img src="" data-src="" alt="">
+															<img src="http://bros-admin.herokuapp.com/assets/images/<%= item.images %>" data-src="http://bros-admin.herokuapp.com/assets/images/<%= item.images %>" alt="">
 														</div>
 														<div class="tt-item-descriptions">
-															<h2 class="tt-title"></h2>
+															<h2 class="tt-title"><%= item.item.name %></h2>
 															
-															<div class="tt-quantity">X</div> <div class="tt-price">$</div>
+															<div class="tt-quantity"><%= item.qty %> X</div> <div class="tt-price">$<%= item.item.price %></div>
 														</div>
 													</a>
 													
 													
 												</div>
-											
+												<% i++;})
+												if(session.cart.numItems > 3){
+												%>
+												<h6><center><a href="/shopping_cart">...</a></center></h6>
+												<% }} %>
 												
 											</div>
 											<div class="tt-cart-total-row">
 												<div class="tt-cart-total-title">Tổng tiền:</div>
-												<div class="tt-cart-total-price"></div>
+												<div class="tt-cart-total-price">$<%= session.cart.totalPrice %></div>
 											</div>
 											<div class="tt-cart-btn">
-												
+												<% if(session.cart.numItems != 0){ %>
 													<div class="tt-item">
-													
+													<%if (typeof(user) !== 'undefined' && user.isAuthenticated) { %>
 													<a href="/add-order" class="btn">Chuyển đến thanh toán</a>
-													
+													<% }else if(typeof(user) == 'undefined'){ %>
 														<a href="/login" class="btn">Đăng nhập để thanh toán</a>
 														
-														
+														<% }else if(typeof(user) !== 'undefined' && !user.isAuthenticated){ %>
 															<a href="/verify-email" class="btn">Kích hoạt email để thanh toán</a>
-															
+															<% } %>
 												</div>
-													
+													<% } %>
 												
 												<div class="tt-item">
 													<a href="/shopping_cart" class="btn-link-02 tt-hidden-mobile">Xem giỏ hàng</a>
@@ -201,32 +214,33 @@
 								</div>
 								<div class="tt-dropdown-inner">
 									<ul>
+											<%if (typeof(user) !== 'undefined') { %>
+												<li>Xin chào, <%= user.username %></a></li>
+												<li><a href="/account"><i class="icon-f-94"></i>Tài khoản</a></li>
+												<% if(user.isAuthenticated) {%>
+												<li><a href="/shopping_cart"><i class="icon-f-68"></i>Thanh toán</a></li>
+												<% } %>
+												<% if(!user.isAuthenticated) {%>
+													<li><a href="/verify-email"><i class="icon-f-68"></i>Xác thực email</a></li>
+												<% }} %>
+									    
+										
+										
 										<%if (typeof(user) !== 'undefined') { %>
-											<li>Xin chào, <%= user.username %></a></li>
-											<li><a href="/account"><i class="icon-f-94"></i>Tài khoản</a></li>
-											<% if(user.isAuthenticated) {%>
-											<li><a href="/shopping_cart"><i class="icon-f-68"></i>Thanh toán</a></li>
+											<li><a href="/logout"><i class="icon-f-77"></i>Đăng xuất</a></li>
 											<% } %>
-											<% if(!user.isAuthenticated) {%>
-												<li><a href="/verify-email"><i class="icon-f-68"></i>Xác thực email</a></li>
-										<% }} %>
-									
-									
-									
-									<%if (typeof(user) !== 'undefined') { %>
-										<li><a href="/logout"><i class="icon-f-77"></i>Đăng xuất</a></li>
-									<% } %>
 
-									<%if (typeof(user) === 'undefined') { %>
-										<li><a href="/login"><i class="icon-f-76"></i>Đăng nhập</a></li>									
-										<li><a href="/create-account"><i class="icon-f-94"></i>Đăng ký</a></li>
-									<% } %>
-												
+											<%if (typeof(user) === 'undefined') { %>
+												<li><a href="/login"><i class="icon-f-76"></i>Đăng nhập</a></li>
+									    
+									    <li><a href="/create-account"><i class="icon-f-94"></i>Đăng ký</a></li>
+												<% } %>
+									    
 									</ul>
 								</div>
 							</div>
 						</div>
-					</div>					
+					</div>
 				</div>
 			</div>
 		</div>
