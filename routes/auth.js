@@ -10,6 +10,7 @@ router.get("/create-account", authController.getSignUp);
 router.post('/create-account', authController.postSignup);
 router.get("/account", userController.getAccount);
 router.get("/account-change-info", userController.getAccountChange);
+router.post("/account-change-info",userController.postAccountChange);
 router.get("/verify-email", authController.getVerifyEmail);
 router.post("/verify-email", authController.postVerifyEmail);
 router.get("/forgot-password", authController.getForgotPass);

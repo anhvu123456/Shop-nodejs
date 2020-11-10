@@ -67,22 +67,22 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  var cartProduct;
-  if (!req.session.cart) {
-    cartProduct = null;
-  } else {
-    var cart = new Cart(req.session.cart);
-    cartProduct = cart.generateArray();
-  }
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// app.use(function(err, req, res, next) {
+//   var cartProduct;
+//   if (!req.session.cart) {
+//     cartProduct = null;
+//   } else {
+//     var cart = new Cart(req.session.cart);
+//     cartProduct = cart.generateArray();
+//   }
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error', { cartProduct: cartProduct });
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error', { cartProduct: cartProduct });
+// });
 
 app.listen(8080, function() {
   console.log('Server listening on port ');

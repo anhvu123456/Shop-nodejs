@@ -25,16 +25,16 @@
               <div class="col-md-8 col-lg-6">
                 <div class="tt-item">
                   <h2 class="tt-title">
-                    Nhập mã xác thực đã gửi ở
+                    Nhập Mã Xác Thực
                   </h2>
-                  
+                  <% if(message != "undefined") { %>
                   <div
                     class="form-group form-control error"
                     style="background-color: #FFCCCC; font-weight: bold; color : rgb(210, 29, 29)"
                   >
-                    
+                    <%= message %>
                   </div>
-                  
+                  <% } %>
                   <div class="form-default">
                     <form
                       id="createaccount"

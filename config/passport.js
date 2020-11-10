@@ -55,9 +55,7 @@ module.exports = function(passport){
     passport.use('local-signup', new LocalStrategy({ passReqToCallback: true}, function(req, username, password, done) {
         User.findOne({ username: username}, function(err, user) {
             if(err) {
-                return done(null, false, {
-                    message: "Xin mời bạn nhập lại"
-                });
+                return done(err);
             }
             if(user) {
                 return done(null, false, {

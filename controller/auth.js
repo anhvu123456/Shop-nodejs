@@ -82,7 +82,7 @@ exports.getVerifyEmail = (req, res, next) => {
         service: 'Gmail',
         auth: {
             user: 'dangvuanhdev.98@gmail.com',
-            pass: ''
+            pass: 'tuyetvoicongavoi'
         }
     });
     User.findOne({username: req.user.username}).then(user => {
@@ -110,12 +110,19 @@ exports.getVerifyEmail = (req, res, next) => {
         user.verify_token = verification_token;
         user.save();
     });
-
+        var cartProduct;
+        if (!req.session.cart) {
+            cartProduct = null;
+        } else {
+            var cart = new Cart(req.session.cart);
+            cartProduct = cart.generateArray();
+        }
     const message = req.flash('error')[0];
     res.render('verify-email', {
         title: "Xác thực email",
         message: `${message}`,
-        user:req.user
+        user:req.user,
+        cartProduct: cartProduct
     }); 
 };
 exports.postVerifyEmail = (req, res, next) => {
