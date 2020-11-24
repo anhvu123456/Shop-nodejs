@@ -10,10 +10,6 @@ const productSchema = new Schema({
         type: String,
         required: false
     },
-    stock: {
-        type: Number,
-        required: true
-    },
     price: {
         type: Number,
         required: true
@@ -23,9 +19,10 @@ const productSchema = new Schema({
         required: true
     },
     productType: {
-        main: String,
-        sub: String
-    },
+        type: String,
+        required:true
+    }
+    ,
     color: {
         type: String,
         required: false
@@ -62,8 +59,7 @@ const productSchema = new Schema({
     },
     ofSellers: {
         userId: {
-            type: Schema.Types.ObjectId,
-            required: true,
+            type: Schema.Types.ObjectId,            
             ref:'User'
         },
         name: String

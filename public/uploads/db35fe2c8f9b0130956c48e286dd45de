@@ -1,0 +1,29 @@
+// var a = 1; var b = 2;
+// var c = a + b;
+// console.log(c);
+
+// Number
+var a1 = -100;
+var a2 = 0.5;
+
+
+//String
+var str = 'Hello word';
+var str2 = "Hello, word";
+console.log(str2);
+
+var str3 = 'Hello, I\'m Anh.';
+
+// boolean (true, false)
+var isHidden = true;
+console.log(isHidden);
+var isMale = false;
+
+// underfined
+
+var a;
+a = 100;
+
+// null
+a = null;
+console.log(a);

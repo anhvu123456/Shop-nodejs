@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/head %>
+  </head>
+  <body>
+    <% include partials/loader %>
+    <header>
+      <% include partials/header %>
+    </header>
+    <div class="tt-breadcrumb">
+      <div class="container">
+        <ul>
+          <li><a href="/create-product">Thêm sản phẩm</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    <div id="tt-pageContent">
+      <div class="container-indent">
+        <div class="container container-fluid-custom-mobile-padding">          
+          <div class="tt-shopping-layout">           
+            <div class="tt-wrapper">
+              <h3 class="tt-title">Danh sách sản phẩm</h3>            
+              <div class="tt-table-responsive">
+                <table class="tt-table-shop-01">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên</th>
+                      <th>Ảnh</th>
+                      <th>Giá</th>
+                      <th>Loại</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(var i = 0; i< product.length; i++){ %>
+                      <tr>      
+                        <td><%= i + 1 %></td>                
+                        <td><%= product[i].name %></td>
+                        <td><img src="<%= product[i].images %>" alt="error" style="height: 75px; width: 75px;"></td>
+                        <td><%= product[i].price %></td>
+                        <td><%= product[i].productType %></td>
+                        <td><a href="/product-show/<%= product[i]._id %>">Xem</a></td>
+                        <td><a href="/upload-images/<%= product[i]._id %>">Upload</a></td>
+                        <td><a href="/delete/<%= product[i]._id %>">Xóa</a></td>
+                      </tr>
+                      <% } %> 
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+   
+    </footer>
+    <a href="#" class="tt-back-to-top">BACK TO TOP</a>
+    <!-- Partials -->
+    <% include partials/modal-addtocartproduct %> <% include
+    partials/modal-quickviewmodal %> <% include partials/modal-videoproduct %>
+    <% include partials/modal-subscribegood %> <% include
+    partials/modal-newsletter %> <% include partials/script %>
+  </body>
+</html>
