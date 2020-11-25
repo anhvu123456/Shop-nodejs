@@ -5,6 +5,7 @@ const adminController = require('../controller/admin');
 var upload = multer({ dest: './public/uploads/' });
 
 router.get('/list-product', adminController.getProductAdmin);
+router.get('/list-product/:page', adminController.getProductAdmin);
 router.get('/product-show/:id', adminController.showProduct);
 router.get('/create-product', adminController.getAddProduct);
 router.post('/create-product', upload.single('images'), adminController.postSaveProduct);

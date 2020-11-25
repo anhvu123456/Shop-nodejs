@@ -3,23 +3,30 @@ const User = require('../models/user');
 const Cart = require("../models/cart");
 
 exports.getProductAdmin = (req, res, next) => {
-    var cartProduct;
+  var cartProduct;
   if (!req.session.cart) {
     cartProduct = null;
   } else {
     var cart = new Cart(req.session.cart);
     cartProduct = cart.generateArray();
   }
-  Product.find({}).exec(function(err, product){
-    if(err){
-      console.log("Err: "+ err )
-    }else{
+  let perPage = 10;
+  let page = req.params.page || 1;
+  Product.find({})
+  .skip((perPage * page) - perPage)
+  .limit(perPage)
+  .exec((err, products) => {
+    Product.countDocuments((err, count) => {
+      if(err) return next(err);
       res.render('list-product', {
         cartProduct: cartProduct,
-        product: product
-    });
-    }
-  })
+        products: products,
+        current: page,
+        pages: Math.ceil(count/perPage)
+      });
+    })
+  });
+  console.log(page);
     
 
 }

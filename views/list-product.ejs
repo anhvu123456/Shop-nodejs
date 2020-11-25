@@ -37,20 +37,86 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% for(var i = 0; i< product.length; i++){ %>
+                    <% for(var i = 0; i< products.length; i++){ %>
                       <tr>      
                         <td><%= i + 1 %></td>                
-                        <td><%= product[i].name %></td>
-                        <td><img src="<%= product[i].images %>" alt="error" style="height: 75px; width: 75px;"></td>
-                        <td><%= product[i].price %></td>
-                        <td><%= product[i].productType %></td>
-                        <td><a href="/product-show/<%= product[i]._id %>">Xem</a></td>
-                        <td><a href="/upload-images/<%= product[i]._id %>">Upload</a></td>
-                        <td><a href="/delete/<%= product[i]._id %>">Xóa</a></td>
+                        <td><%= products[i].name %></td>
+                        <td><img src="/<%= products[i].images %>" alt="error" style="height: 75px; width: 75px;"></td>
+                        <td><%= products[i].price %></td>
+                        <td><%= products[i].productType %></td>
+                        <td><a href="/product-show/<%= products[i]._id %>">Xem</a></td>
+                        <td><a href="/upload-images/<%= products[i]._id %>">Upload</a></td>
+                        <td><a href="/delete/<%= products[i]._id %>">Xóa</a></td>
                       </tr>
                       <% } %> 
                   </tbody>
                 </table>
+                <div class="row">
+                  <!-- hiển thị phân trang nếu có trang -->
+                  <% if(pages > 0) { %>
+                  <nav class="mx-auto">
+                    <ul class="pagination" style="margin-top: 2rem;">                   
+                      <!-- FIRST ITEM -->  
+                      <% if(current === 1) { %>                    
+                          // Nếu thông số /list-product/1/ là 1 thì First sẽ bị disabled
+                          
+                      <% } else { %>
+                        // Nếu thông số /list-product/2/ từ 2 trở lên thì First sẽ bỏ disabled
+                        <li class="page-item">
+                          <a class="page-link" href="/list-product" style="width: 60px">First</a>
+                        </li>
+                                           
+                      <% } %>
+                      
+                      <!-- ITEMS  -->
+                      <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %> 
+                // Toán tử điều kiện 3 ngôi syntax: < điều_kiện ? giá_trị_1 : giá_trị_2 >
+               // Nếu điều_kiện trả về true, toán tử có giá trị giá_trị_1. Ngược lại toán tử có giá trị giá_trị_2.
+                      <% if(i !== 1) { %>
+                          <li class="page-item disabled">
+                            <a class="page-link" href="#">...</a>
+                          </li>
+                      <% } %>
+                      <% for(; i <= (Number(current) + 2) && i <= pages; i++) { %>
+                      // Sử dụng vòng lặp để lặp qua từng trang và tăng số trang 
+                      // Trong vòng lặp for có ba biểu thức tùy chọn nên chỉ cần các bạn tách mỗi biểu thức bằng dấu `;` là oke rồi
+                        <% if(i == current) { %>
+                          <li class="page-item active">
+                            <a class="page-link" href="/list-product/<%= i %>/">
+                              <%= i %>
+                            </a>
+                          </li>
+                      <% } else { %>
+                          <li class="page-item">
+                            <a class="page-link" href="/list-product/<%= i %>/">
+                              <%= i %>
+                            </a>
+                          </li>
+                      <% } %>
+                      <% if (i == Number(current) + 2 && i < pages) { %>
+                          <li class="page-item disabled">
+                            <a class="page-link" href="#">...</a>
+                          </li>
+                      <% } %>
+                      <% } %>
+                      
+                      <!-- LAST ITEM -->
+                      <% if(current == pages) { %> 
+                     // Nếu số current( chỉ số phân trang ) là 6 và tổng số page là 6 thì Last bị disabled
+                          
+                      <% } else { %>
+                      // Ngược lại, thì Last là trang cuối cùng pages ở đây là 6 đồng nghĩa với Last là trang số 6
+                          <li class="page-item">
+                            <a class="page-link" href="/list-product/<%= pages %>/" style="width: 60px">
+                              Last
+                            </a>
+                          </li>
+                      <% } %>
+                    </ul>
+                  </nav>
+                  <% } %>
+                </div>
+              </div>
               </div>
             </div>
             
